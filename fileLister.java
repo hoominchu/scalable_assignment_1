@@ -23,12 +23,29 @@ public class fileLister {
 
 		for(int i=0; i<allPaths.length;i++){
 			if (allPaths[i].isDirectory()){
-				System.out.println("d " + allPaths[i]);
+				int numberOfDirectFiles = countDirectFiles(allPaths[i].toString());
+				System.out.println(numberOfDirectFiles + " d " + allPaths[i]);
 				printAllFilesInDirectory(allPaths[i].toString());
 			}
 			else{
-				System.out.println("f " + allPaths[i]);
+				System.out.println("0 f " + allPaths[i]);
 			}
 		}
+	}
+
+	//Counts the number of files directly under a directory given the path of a directory. 
+	public static int countDirectFiles(String path){
+		File directory = new File(path);
+		File[] allPaths = directory.listFiles();
+
+		int numberOfDirectFiles=0;
+
+		for(int i=0; i<allPaths.length;i++){
+			if(allPaths[i].isDirectory()==false){
+				numberOfDirectFiles++;
+			}
+		}
+
+		return numberOfDirectFiles;
 	}
 }
