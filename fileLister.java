@@ -23,12 +23,13 @@ public class fileLister {
 
 		for(int i=0; i<allPaths.length;i++){
 			if (allPaths[i].isDirectory()){
+				int numberOfAllFiles = countAllFiles(allPaths[i].toString(),0);
 				int numberOfDirectFiles = countDirectFiles(allPaths[i].toString());
-				System.out.println(numberOfDirectFiles + " d " + allPaths[i]);
+				System.out.println(numberOfAllFiles + " " + numberOfDirectFiles + " d " + allPaths[i]);
 				printAllFilesInDirectory(allPaths[i].toString());
 			}
 			else{
-				System.out.println("0 f " + allPaths[i]);
+				System.out.println("0 0 f " + allPaths[i]);
 			}
 		}
 	}
@@ -47,5 +48,28 @@ public class fileLister {
 		}
 
 		return numberOfDirectFiles;
+	}
+
+	//Counts the number of all files in a directory including the ones that are not directly under it. Give the arguments path of a directory and 0.
+	public static int countAllFiles(String path, int numberOfFilesInParentDirectory){
+		File directory = new File(path);
+		File[] allPaths = directory.listFiles();
+		int numberOfDirectFiles=0, numberOfTotalFiles=numberOfFilesInParentDirectory, numberOfDirectories=0;
+
+		for(int i=0; i<allPaths.length;i++){
+			if(allPaths[i].isDirectory()==false){
+				numberOfDirectFiles++;
+			}
+		}
+
+		numberOfTotalFiles=numberOfFilesInParentDirectory+numberOfDirectFiles;
+
+		for(int i=0; i<allPaths.length;i++){
+			if (allPaths[i].isDirectory()) {
+				numberOfTotalFiles = countAllFiles(allPaths[i].toString(),numberOfTotalFiles);
+			}
+		}
+
+		return numberOfTotalFiles;
 	}
 }
