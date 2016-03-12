@@ -14,6 +14,7 @@ public class fileLister {
 
 		getTypesCount(homeDirectoryPath);
 
+		System.out.println("Number of files by type:");
 		printTypesCount();
 		
 		printAllFilesInDirectory(homeDirectoryPath);
